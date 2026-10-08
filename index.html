@@ -364,10 +364,15 @@ function route(){
  if(hash.indexOf('#/')===0){location.replace('#view-'+name);return;}
  document.querySelectorAll('main>.view').forEach(function(view){view.hidden=view!==page;});
  document.querySelectorAll('nav').forEach(function(nav){nav.classList.remove('open');});
- if(hash.indexOf('#view-')===0){window.scrollTo(0,0);}
+ if(hash.indexOf('#view-')===0){requestAnimationFrame(function(){if(name==='index'){window.scrollTo(0,0);}else{page.scrollIntoView({behavior:'auto',block:'start'});}});}
  else if(hash){var section=document.getElementById(hash.slice(1));if(section){requestAnimationFrame(function(){section.scrollIntoView();});}}
 }
 window.addEventListener('hashchange',route);
+document.addEventListener('click',function(event){
+ var link=event.target.closest('a[href^="#"]');
+ if(!link||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+ if(link.getAttribute('href')===location.hash){event.preventDefault();route();}
+});
 route();
 })();
 </script><script>const menu=document.querySelector('.menu');menu?.addEventListener('click',()=>{let open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',open);document.querySelector('nav').classList.toggle('open',open)});const form=document.querySelector('#request');if(form){const status=document.querySelector('#status');form.addEventListener('submit',e=>{e.preventDefault();try{localStorage.setItem('twin-city-request',JSON.stringify(Object.fromEntries(new FormData(form))));status.textContent='Draft saved on this device. It has not been sent to Twin City.'}catch{status.textContent='Your browser could not save the draft. Use Download request to keep a copy.'}});document.querySelector('#download').addEventListener('click',()=>{if(!form.reportValidity())return;const data=Object.fromEntries(new FormData(form));const text='Twin City Draft Services — request draft (not sent)\n\n'+Object.entries(data).map(([k,v])=>k+': '+v).join('\n');const url=URL.createObjectURL(new Blob([text],{type:'text/plain'}));const a=document.createElement('a');a.href=url;a.download='twin-city-service-request.txt';a.click();URL.revokeObjectURL(url);status.textContent='Request downloaded. It has not been sent.'})}

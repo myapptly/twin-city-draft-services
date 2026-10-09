@@ -354,6 +354,13 @@ main>#view-index{display:block!important}
 body:has(main>.view:target) main>#view-index{display:none!important}
 main>.view:target{display:block!important}
 header a{cursor:pointer;pointer-events:auto}
+
+/* Readable biographies beside Jeff and Dylan portraits */
+#view-about .team-bios{background:#ffffff!important;color:#251735!important}
+#view-about .team-bios .bio-row p:not(.eyebrow){color:#28212f!important;font-size:19px!important;line-height:1.8!important;font-weight:500!important}
+#view-about .team-bios .bio-row h2{color:#54247f!important;font-size:clamp(30px,3vw,42px)!important;line-height:1.2!important}
+#view-about .team-bios .bio-row .eyebrow{color:#6b348d!important;font-size:15px!important;font-weight:800!important;letter-spacing:.07em!important}
+@media(max-width:800px){#view-about .team-bios .bio-row p:not(.eyebrow){font-size:18px!important;line-height:1.7!important}}
 </style><style>
 /* Jeff and Dylan: compact headshots in the Meet the Team introduction */
 #view-about .team-intro-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,440px);gap:34px;align-items:start}
